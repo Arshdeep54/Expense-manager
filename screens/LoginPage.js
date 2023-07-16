@@ -4,6 +4,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../FireBase";
+
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +22,7 @@ const LoginPage = ({ navigation }) => {
   const SignIn = () => {
     signInWithEmailAndPassword(auth,email, password)
       .then(() => {
-        alert("user signed in ");
+        
         navigation.navigate("home");
       })
       .catch((error) => {

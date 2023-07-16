@@ -9,11 +9,13 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { app, auth } from "../FireBase";
+import { app } from "../FireBase";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 export default function RegisterPage({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [balance,setBalance]= useState(0);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,11 +25,24 @@ export default function RegisterPage({ navigation }) {
 
   const RegisterUser = () => {
     const auth = getAuth(app);
+    const db = getFirestore(app);
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((authUser) => {
         console.log(authUser);
-        alert("you signed in ");
-        navigation.navigate("Login")
+        try {
+          const docRef = addDoc(collection(db, "users"), {
+            userId: authUser.user.uid,
+            name: name,
+            email:authUser.user.email,
+            balance:balance,
+
+          });
+          console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+        navigation.navigate("Login");
       })
       .catch((error) => {
         alert(error.message);
@@ -54,6 +69,13 @@ export default function RegisterPage({ navigation }) {
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
+        />
+        <TextInput
+          placeholder="Enter balance"
+          value={balance}
+        keyboardType="numeric"
+          onChangeText={(num)=>{setBalance(num)}}
+          style={styles.input}
         />
         <TouchableOpacity style={styles.button} onPress={RegisterUser}>
           <Text>Register</Text>

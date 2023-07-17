@@ -3,12 +3,12 @@ import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from "../FireBase";
+import { app,auth } from "../FireBase";
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const auth = getAuth(app);
+  // const auth = getAuth(app);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       console.log(authUser);
@@ -17,7 +17,7 @@ const LoginPage = ({ navigation }) => {
       }
     });
     return unsubscribe;
-  }, []);
+  }, [navigation]);
 
   const SignIn = () => {
     signInWithEmailAndPassword(auth,email, password)

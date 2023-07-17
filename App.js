@@ -6,6 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginPage from './screens/LoginPage';
 import RegisterPage from './screens/RegisterPage';
 import HomePage from './screens/HomePage';
+import CreditScreen from './screens/CreditScreen';
+import DebitScreen from './screens/DebitScreen';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -17,6 +19,8 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen name="home" component={HomePage} options={{headerShown:false,title:"Home"}} />
+        <Stack.Screen name="credit" component={CreditScreen} />
+        <Stack.Screen name="debit" component={DebitScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

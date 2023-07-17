@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Pressable, StyleSheet, Text, View } from "react-native";
+import { Button, Pressable, StyleSheet, Text,TouchableOpacity, View } from "react-native";
 
 import LoginPage from "./LoginPage";
 import { getAuth } from "firebase/auth";
-import { app } from "../FireBase";
+import { app ,auth} from "../FireBase";
 const HomePage = ({ navigation }) => {
-  const auth = getAuth(app);
+  // const auth = getAuth(app);
   const logOut = () => {
     auth
       .signOut()
@@ -25,10 +25,15 @@ const HomePage = ({ navigation }) => {
           <Text>Log out</Text>
         </Pressable>
       </View>
-
-    <Pressable>
-        add money
-    </Pressable>
+<View style={styles.cardContainer}>
+<TouchableOpacity style={styles.cards} onPress={()=> navigation.navigate("credit") }>
+        <Text>add money</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.cards} onPress={()=> navigation.navigate("debit")}>
+    <Text>debit money</Text>
+    </TouchableOpacity>
+</View>
+   
     </View>
   );
 };
@@ -42,5 +47,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 15,
+  },
+  cards:{
+    marginTop: 15,
+    backgroundColor:'grey',
+    borderRadius:15,
+    width:'40%',
+    height:150,
+  },
+  cardContainer:{
+    flexDirection:"row",
+    justifyContent:"space-evenly",
   },
 });

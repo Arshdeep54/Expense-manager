@@ -17,7 +17,7 @@ const LoginPage = ({ navigation }) => {
       }
     });
     return unsubscribe;
-  }, [navigation]);
+  }, []);
 
   const SignIn = () => {
     signInWithEmailAndPassword(auth,email, password)
@@ -33,7 +33,7 @@ const LoginPage = ({ navigation }) => {
     <View>
       <Text>this is login </Text>
       <TextInput
-        placeholder="Email"
+        placeholder="Enter Email"
         value={email}
         onChangeText={(text) => setEmail(text)}
         style={styles.input}
@@ -55,7 +55,7 @@ const LoginPage = ({ navigation }) => {
     </View>
   );
 };
-
+                                                                                                                                                                  
 const styles = StyleSheet.create({
   container: {
     flex: 1,

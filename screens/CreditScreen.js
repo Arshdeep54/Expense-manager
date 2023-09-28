@@ -7,41 +7,60 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getFirestore,
+  doc,
+  getDocs,
+  updateDoc,
+  Timestamp,
+} from "firebase/firestore";
 import { app, auth } from "../FireBase";
 
 const CreditScreen = ({ navigation }) => {
   const [amount, setAmount] = useState(0);
   const [desc, setDesc] = useState("");
   const db = getFirestore(app);
-  const creditmoney = async() => {
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-    var sec = new Date().getSeconds(); //Current Seconds
+  var id;
+  var balance=0;
 
-    console.log(
-      date + "/" + month + "/" + year + " " + hours + ":" + min + ":" + sec,
-      amount,
-      desc
-    );
-    
+  const creditmoney = async () => {
+    console.log(Timestamp.now().toDate());
     try {
-        const docRef = await addDoc(collection(db, "transactions"), {
-          userId:auth.currentUser.uid,
-          description:desc,
-          amount:amount,
-          credited:true,
-          date: date + "/" + month + "/" + year,
-          actionTime: hours + ":" + min + ":" + sec,
-        });
-        console.log("Document written with ID: ", docRef.id);
-      } catch (e) {
-        alert("Error adding document: ", e);
-      }
-    
+      const docRef = await addDoc(collection(db, "transactions"), {
+        userId: auth.currentUser.uid,
+        description: desc,
+        amount: Number(amount),
+        credited: true,
+        date: Timestamp.now().toDate().toString(),
+      });
+
+      const querySnapshot = await getDocs(collection(db, "users"));
+       querySnapshot.forEach((doc) => {
+     if(doc.data().userId==auth.currentUser.uid){
+      balance=doc.data().balance;
+      id=doc.id;
+     }
+
+        console.log(`${doc.id} => ${doc.data().balance}`);
+      });
+
+     
+
+      const currDocRef = doc(db, "users",id);
+      // Set the "capital" field of the city 'DC'
+      await updateDoc(currDocRef, {
+        
+        balance:Number(Number(balance)+Number(amount)),
+      });
+
+
+      console.log("Document written with ID: ", docRef.id);
+      navigation.goBack();
+    } catch (e) {
+      alert("Error adding document: ", e);
+    }
   };
   return (
     <KeyboardAvoidingView>

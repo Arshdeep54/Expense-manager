@@ -5,6 +5,8 @@ import LoginPage from "./LoginPage";
 import { getAuth } from "firebase/auth";
 import { app ,auth} from "../FireBase";
 const HomePage = ({ navigation }) => {
+
+
   // const auth = getAuth(app);
   const logOut = () => {
     auth
@@ -17,10 +19,13 @@ const HomePage = ({ navigation }) => {
         alert(error.message);
       });
   };
+
+console.log(auth.currentUser.displayName);
   return (
+    <>
     <View>
       <View>
-        <Text>Home</Text>
+        {/* <Text>{auth.currentUser.displayName}</Text> */}
         <Pressable style={styles.btn} onPress={logOut}>
           <Text>Log out</Text>
         </Pressable>
@@ -35,6 +40,7 @@ const HomePage = ({ navigation }) => {
 </View>
    
     </View>
+    </>
   );
 };
 

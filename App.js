@@ -8,6 +8,9 @@ import RegisterPage from './screens/RegisterPage';
 import HomePage from './screens/HomePage';
 import CreditScreen from './screens/CreditScreen';
 import DebitScreen from './screens/DebitScreen';
+import BalanceScreen from './screens/BalanceScreen';
+import TransactionsScreen from './screens/TransactionsScreen';
+
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -21,6 +24,8 @@ export default function App() {
         <Stack.Screen name="home" component={HomePage} options={{headerShown:false,title:"Home"}} />
         <Stack.Screen name="credit" component={CreditScreen} />
         <Stack.Screen name="debit" component={DebitScreen} />
+        <Stack.Screen name="balance" component={BalanceScreen} />
+        <Stack.Screen name="transactions" component={TransactionsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

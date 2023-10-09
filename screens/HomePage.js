@@ -20,12 +20,13 @@ const HomePage = ({ navigation }) => {
       });
   };
 
-console.log(auth.currentUser.displayName);
+//console.log(auth.currentUser.displayName);
   return (
     <>
     <View>
       <View>
         {/* <Text>{auth.currentUser.displayName}</Text> */}
+        <Text>Home</Text>
         <Pressable style={styles.btn} onPress={logOut}>
           <Text>Log out</Text>
         </Pressable>
@@ -37,8 +38,17 @@ console.log(auth.currentUser.displayName);
     <TouchableOpacity style={styles.cards} onPress={()=> navigation.navigate("debit")}>
     <Text>debit money</Text>
     </TouchableOpacity>
-</View>
-   
+</View >
+<View style={styles.Txtcont}>
+   <TouchableOpacity style={styles.FullLineText} onPress={()=> navigation.navigate("balance")}>
+    <Text>Check you balance</Text>
+    <Text> {">"} </Text>
+   </TouchableOpacity>
+   <TouchableOpacity style={styles.FullLineText} onPress={()=> navigation.navigate("transactions")}>
+    <Text>Transaction History</Text>
+    <Text> {">"} </Text>
+   </TouchableOpacity> 
+   </View>
     </View>
     </>
   );
@@ -58,11 +68,30 @@ const styles = StyleSheet.create({
     marginTop: 15,
     backgroundColor:'grey',
     borderRadius:15,
+    padding:12,
     width:'40%',
     height:150,
   },
+  FullLineText :{
+    marginTop: 9,
+    padding:5,
+    backgroundColor:'white',
+    borderRadius:5,
+    width:'85%',
+    flexDirection:"row",
+    justifyContent:"space-between",
+    height:35,
+  },
   cardContainer:{
+    width:'100%',
     flexDirection:"row",
     justifyContent:"space-evenly",
+    marginBottom:7.5,
+  },
+  Txtcont:{
+    width:'100%',
+    marginTop:15,
+    justifyContent:"space-evenly",
+    alignItems:"center",
   },
 });

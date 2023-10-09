@@ -1,43 +1,63 @@
 import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
 import React, { useEffect, useState } from "react";
-import { collection, getFirestore, getDocs } from "firebase/firestore";
+import { collection, getFirestore, getDocs, query } from "firebase/firestore";
 import { app, auth } from "../FireBase";
-import Transaction from "../components/transaction"
+import Transaction from "../components/transaction";
 
-const TransactionsScreen = ({navigation}) => {
- const [Transactions,setTransactions]=useState([]);
- // var id;
+const TransactionsScreen = ({ navigation }) => {
+  const [Transactions, setTransactions] = useState([
+    {
+      description: "descption",
+      amount: 90,
+      date: " kjn ",
+      credited: false,
+    },
+  ]);
+  // var id;
   const db = getFirestore(app);
-  useEffect(() => {
-    //code with await keyword here
-    async function fetchData() {
+  const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, "transactions"));
+    console.log(querySnapshot);
     querySnapshot.forEach((doc) => {
       if (doc.data().userId == auth.currentUser.uid) {
-        const uTransactions=[
-          ...Transactions,{
-            desc:doc.data().description,
-            amount:doc.data().amount,
-            credited:doc.data().credited,
-            date:doc.data().date,
-          },
-        ];
-        setTransactions(uTransactions);
-
-      
-    }
+        // console.log(doc.data());
+        Transactions.push(doc.data());
+      }
     });
+    setTransactions(Transactions);
   };
-  fetchData();
-}, []);
-console.log(Transactions);
+  useEffect(() => {
+    //code with await keyword here
+
+    fetchData();
+    console.log(Transactions);
+  }, []);
+  console.log(Transactions);
+
   return (
     <View>
       <Text>Transaction History</Text>
-      <Transaction desc={"this is desc"} amount={300} datet={"03/09/2023"}/>
-      <Transaction desc={"this is desc 2"} amount={400} datet={"04/09/2023"}/>
+      <Text>Loading</Text>
+
+      {Transactions.forEach((trans) => {
+        <Transaction
+          description={trans.desciption}
+          amount={trans.amount}
+          date={trans.date}
+          credited={trans.credited}
+        />;
+      })}
+      {/* {Transactions?.forEach((trans) => {
+         <Transaction
+           desc={trans.desciption}
+           amount={trans.amount}
+           datet={trans.date}
+           credited={trans.credited}
+         />;
+       })}
+       <Text>Loading</Text> */}
     </View>
-  )
+  );
 };
 
 export default TransactionsScreen;

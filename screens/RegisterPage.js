@@ -8,7 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { getAuth, createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { app, auth } from "../FireBase";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 export default function RegisterPage({ navigation }) {
@@ -35,7 +39,7 @@ export default function RegisterPage({ navigation }) {
           const docRef = await addDoc(collection(db, "users"), {
             userId: authUser.user.uid,
             name: name,
-            balance:Number(balance),
+            balance: Number(balance),
             email: email,
           });
           console.log("Document written with ID: ", docRef.id);
@@ -43,7 +47,7 @@ export default function RegisterPage({ navigation }) {
         } catch (e) {
           alert("Error adding document: ", e.message);
         }
-       auth.currentUser.displayName=name;
+        auth.currentUser.displayName = name;
       })
       .catch((error) => {
         alert(error.message);
@@ -54,13 +58,13 @@ export default function RegisterPage({ navigation }) {
       <View>
         <TextInput
           placeholder="Name"
-          value={name}
+          value={name.toString()}
           onChangeText={(text) => setName(text)}
           style={styles.input}
         />
         <TextInput
           placeholder="Email"
-          value={email}
+          value={email.toString()}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
@@ -73,7 +77,7 @@ export default function RegisterPage({ navigation }) {
         />
         <TextInput
           placeholder="Enter balance"
-          value={balance}
+          value={Number(balance)}
           keyboardType="numeric"
           onChangeText={(num) => {
             setBalance(num);

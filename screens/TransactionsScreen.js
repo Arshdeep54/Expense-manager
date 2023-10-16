@@ -1,18 +1,19 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { collection, getFirestore, getDocs, query } from "firebase/firestore";
 import { app, auth } from "../FireBase";
 import Transaction from "../components/transaction";
+import { ActivityIndicator } from "react-native";
 
 const TransactionsScreen = ({ navigation }) => {
-  const [Transactions, setTransactions] = useState([
-    {
-      description: "descption",
-      amount: 90,
-      date: " kjn ",
-      credited: false,
-    },
-  ]);
+  const [Transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
   // var id;
   const db = getFirestore(app);
   const fetchData = async () => {
@@ -25,37 +26,51 @@ const TransactionsScreen = ({ navigation }) => {
       }
     });
     setTransactions(Transactions);
+    setLoading(false);
   };
   useEffect(() => {
     //code with await keyword here
 
     fetchData();
+
     console.log(Transactions);
   }, []);
+
   console.log(Transactions);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
+  const renderItem = ({ item }) => {
+    return (
+      <Transaction
+        description={item.description}
+        amount={item.amount}
+        datet={item.date}
+        credited={item.credited}
+      />
+    );
+  };
 
   return (
     <View>
-      <Text>Transaction History</Text>
-      <Text>Loading</Text>
-
-      {Transactions.forEach((trans) => {
-        <Transaction
-          description={trans.desciption}
-          amount={trans.amount}
-          date={trans.date}
-          credited={trans.credited}
-        />;
-      })}
-      {/* {Transactions?.forEach((trans) => {
-         <Transaction
-           desc={trans.desciption}
-           amount={trans.amount}
-           datet={trans.date}
-           credited={trans.credited}
-         />;
-       })}
-       <Text>Loading</Text> */}
+      <Text
+        style={{
+          fontSize: "18",
+          alignSelf: "center",
+          margin: "3",
+          fontWeight: "500",
+        }}
+      >
+        Transaction History
+      </Text>
+      <FlatList
+        data={Transactions}
+        extraData={Transactions}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.date}
+      />
     </View>
   );
 };

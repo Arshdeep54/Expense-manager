@@ -1,15 +1,33 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-function transaction({ description, amount, date, credited }) {
+function transaction({ description, amount, datet, credited }) {
   return (
-    <View style={styles.card}>
+    <View
+      style={
+        credited
+          ? {
+              backgroundColor: "#1ba60c",
+              marginBottom: 3,
+              marginTop: 3,
+              display: "flex",
+              flexDirection: "column",
+            }
+          : {
+              backgroundColor: "#cf0300",
+              marginBottom: 3,
+              marginTop: 3,
+              display: "flex",
+              flexDirection: "column",
+            }
+      }
+    >
       <View style={styles.icard}>
         <Text style={styles.desc}>{description}</Text>
         <Text style={styles.amount}>{amount}</Text>
       </View>
 
       <View style={styles.jcard}>
-        <Text style={styles.datet}>{date}</Text>
+        <Text style={styles.datet}>{datet}</Text>
       </View>
     </View>
   );
@@ -17,13 +35,6 @@ function transaction({ description, amount, date, credited }) {
 
 export default transaction;
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#fffdd0",
-    marginBottom: 3,
-    marginTop: 3,
-    display: "flex",
-    flexDirection: "column",
-  },
   icard: {
     display: "flex",
     flexDirection: "row",
@@ -36,7 +47,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     fontSize: 18,
-    marginLeft: 2,
+    marginLeft: 5,
   },
   amount: {
     fontSize: 16,

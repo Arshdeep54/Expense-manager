@@ -1,9 +1,17 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { useEffect, useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app,auth } from "../FireBase";
+import { app, auth } from "../FireBase";
+import SafeViewAndroid from "../components/SafeViewAndroid";
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -20,9 +28,8 @@ const LoginPage = ({ navigation }) => {
   }, []);
 
   const SignIn = () => {
-    signInWithEmailAndPassword(auth,email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        
         navigation.navigate("home");
       })
       .catch((error) => {
@@ -30,77 +37,107 @@ const LoginPage = ({ navigation }) => {
       });
   };
   return (
-    <View>
-      <Text>this is login </Text>
-      <TextInput
-        placeholder="Enter Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        style={styles.input}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={SignIn}>
-        <Text>Sign in</Text>
-      </TouchableOpacity>
-      <Button
-        title="Go to register"
-        onPress={() => navigation.navigate("Register")}
-      />
-    </View>
+    <SafeAreaView
+      style={{
+        ...SafeViewAndroid.AndroidSafeArea,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <View>
+        <Text
+          style={{
+            alignSelf: "center",
+            marginTop: 40,
+            fontSize: 24,
+            fontWeight: 600,
+            color: "#1D2D44",
+          }}
+        >
+          Log In
+        </Text>
+      </View>
+      <View
+        style={{
+          margin: "auto",
+          width: "60%",
+          height: 300,
+          backgroundColor: "#5D7798",
+          borderRadius: 5,
+          padding: 15,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        <TextInput
+          placeholder="Enter Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          style={styles.input}
+          secureTextEntry
+        />
+        <TouchableOpacity style={styles.button} onPress={SignIn}>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#F0EBD8",
+            }}
+          >
+            Sign in
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Register")}
+        >
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#F0EBD8",
+            }}
+          >
+            Register
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
-                                                                                                                                                                  
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  inputContainer: {
-    width: "80%",
-  },
+
   input: {
-    backgroundColor: "white",
+    backgroundColor: "#3E5C76",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
+    width: "100%",
     marginTop: 5,
   },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
+
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#1D2D44",
     width: "100%",
     padding: 15,
+
     borderRadius: 10,
     alignItems: "center",
     marginTop: 15,
-  },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: "#0782F9",
-    fontWeight: "700",
-    fontSize: 16,
   },
 });
 

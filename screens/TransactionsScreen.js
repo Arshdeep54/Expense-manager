@@ -18,11 +18,10 @@ const TransactionsScreen = ({ navigation }) => {
   const db = getFirestore(app);
   const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, "transactions"));
-    console.log(querySnapshot);
+    // console.log(querySnapshot);
     querySnapshot.forEach((doc) => {
       if (doc.data().userId == auth.currentUser.uid) {
-        // console.log(doc.data());
-        Transactions.push(doc.data());
+       Transactions.push(doc.data());
       }
     });
     setTransactions(Transactions);
@@ -52,15 +51,17 @@ const TransactionsScreen = ({ navigation }) => {
       />
     );
   };
+ if(Transactions){
 
+ 
   return (
     <View>
       <Text
         style={{
-          fontSize: "18",
           alignSelf: "center",
-          margin: "3",
-          fontWeight: "500",
+          fontSize: 18,
+          margin: 3,
+          fontWeight: 500,
         }}
       >
         Transaction History
@@ -72,7 +73,25 @@ const TransactionsScreen = ({ navigation }) => {
         keyExtractor={(item) => item.date}
       />
     </View>
-  );
+  );}else{
+    return (
+      <View>
+        <Text
+          style={{
+            fontSize: 18,
+            alignSelf: "center",
+            margin: 3,
+            fontWeight: 500,
+          }}
+        >
+          Transaction History 
+
+        </Text>
+        <Text>No Transactions found</Text>
+        
+      </View>
+    );
+  }
 };
 
 export default TransactionsScreen;

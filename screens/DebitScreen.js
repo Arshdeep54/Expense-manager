@@ -18,12 +18,12 @@ import {
 } from "firebase/firestore";
 import { app, auth } from "../FireBase";
 
-const DebitScreen = ({navigation}) => {
+const DebitScreen = ({ navigation }) => {
   const [amount, setAmount] = useState(0);
   const [desc, setDesc] = useState("");
   const db = getFirestore(app);
   var id;
-  var balance=0;
+  var balance = 0;
 
   const debitmoney = async () => {
     console.log(Timestamp.now().toDate());
@@ -37,24 +37,20 @@ const DebitScreen = ({navigation}) => {
       });
 
       const querySnapshot = await getDocs(collection(db, "users"));
-       querySnapshot.forEach((doc) => {
-     if(doc.data().userId==auth.currentUser.uid){
-      balance=doc.data().balance;
-      id=doc.id;
-     }
+      querySnapshot.forEach((doc) => {
+        if (doc.data().userId == auth.currentUser.uid) {
+          balance = doc.data().balance;
+          id = doc.id;
+        }
 
-        console.log(`${doc.id} => ${doc.data().balance}`);
+        // console.log(`${doc.id} => ${doc.data().balance}`);
       });
 
-     
-
-      const currDocRef = doc(db, "users",id);
+      const currDocRef = doc(db, "users", id);
       // Set the "capital" field of the city 'DC'
       await updateDoc(currDocRef, {
-        
-        balance:Number(Number(balance)-Number(amount)),
+        balance: Number(Number(balance) - Number(amount)),
       });
-
 
       console.log("Document written with ID: ", docRef.id);
       navigation.goBack();
@@ -82,7 +78,14 @@ const DebitScreen = ({navigation}) => {
           style={styles.input}
         />
         <TouchableOpacity style={styles.button} onPress={debitmoney}>
-          <Text>Debit</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#F0EBD8",
+            }}
+          >
+            Debit
+          </Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -93,22 +96,21 @@ export default DebitScreen;
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: "white",
+    // backgroundColor: "#3E5C76",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
+    width: "100%",
+    color: "#F0EBD8",
     marginTop: 5,
   },
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#1D2D44",
     width: "100%",
     padding: 15,
+
     borderRadius: 10,
     alignItems: "center",
     marginTop: 15,
   },
 });
-
-
-
-

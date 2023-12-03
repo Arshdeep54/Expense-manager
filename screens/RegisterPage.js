@@ -6,7 +6,10 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
+import SafeViewAndroid from "../components/SafeViewAndroid";
+
 import { TextInput } from "react-native-gesture-handler";
 import {
   getAuth,
@@ -48,14 +51,49 @@ export default function RegisterPage({ navigation }) {
           alert("Error adding document: ", e.message);
         }
         auth.currentUser.displayName = name;
+        console.log(auth.currentUser.displayName);
       })
       .catch((error) => {
         alert(error.message);
       });
   };
   return (
-    <KeyboardAvoidingView>
-      <View>
+    <SafeAreaView
+      style={{
+        ...SafeViewAndroid.AndroidSafeArea,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {/* <View>
+        <Text
+          style={{
+            alignSelf: "center",
+            marginTop: 40,
+            fontSize: 24,
+            fontWeight: 600,
+            color: "#1D2D44",
+          }}
+        >
+          Register
+        </Text>
+      </View> */}
+      <View
+        style={{
+          margin: "auto",
+          width: "60%",
+          height: 325,
+          backgroundColor: "#5D7798",
+          borderRadius: 7,
+          padding: 15,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
         <TextInput
           placeholder="Name"
           value={name.toString()}
@@ -85,10 +123,17 @@ export default function RegisterPage({ navigation }) {
           style={styles.input}
         />
         <TouchableOpacity style={styles.button} onPress={RegisterUser}>
-          <Text>Register</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#F0EBD8",
+            }}
+          >
+            Register
+          </Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
@@ -97,44 +142,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  inputContainer: {
-    width: "80%",
-  },
+
   input: {
-    backgroundColor: "white",
+    backgroundColor: "#3E5C76",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
+    width: "100%",
     marginTop: 5,
   },
-  buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
+
   button: {
-    backgroundColor: "#0782F9",
+    backgroundColor: "#1D2D44",
     width: "100%",
     padding: 15,
+
     borderRadius: 10,
     alignItems: "center",
     marginTop: 15,
-  },
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: "#0782F9",
-    fontWeight: "700",
-    fontSize: 16,
   },
 });

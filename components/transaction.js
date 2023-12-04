@@ -3,31 +3,27 @@ import React from "react";
 function transaction({ description, amount, datet, credited }) {
   return (
     <View
-      style={
-        credited
-          ? {
-              backgroundColor: "#1ba60c",
-              marginBottom: 3,
-              marginTop: 3,
-              display: "flex",
-              flexDirection: "column",
-            }
-          : {
-              backgroundColor: "#cf0300",
-              marginBottom: 3,
-              marginTop: 3,
-              display: "flex",
-              flexDirection: "column",
-            }
-      }
+      style={{
+        marginBottom: 3,
+        marginTop: 3,
+        display: "flex",
+        flexDirection: "column",
+        borderBottomWidth: 2,
+        borderBottomColor: "#1D2D44",
+      }}
     >
       <View style={styles.icard}>
         <Text style={styles.desc}>{description}</Text>
-        <Text style={styles.amount}>{amount}</Text>
+        <Text
+          style={{ ...styles.amount, color: credited ? "green" : "#F0EBD8" }}
+        >
+          {credited ? "+" : "-"}
+          {amount}
+        </Text>
       </View>
 
       <View style={styles.jcard}>
-        <Text style={styles.datet}>{datet}</Text>
+        <Text style={styles.datet}>{datet.substring(-1, 15, 0)}</Text>
       </View>
     </View>
   );
@@ -48,6 +44,8 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 18,
     marginLeft: 5,
+
+    color: "#F0EBD8",
   },
   amount: {
     fontSize: 16,
@@ -55,6 +53,6 @@ const styles = StyleSheet.create({
   },
   datet: {
     fontStyle: "italic",
-    right: 1,
+    paddingRight: 2,
   },
 });

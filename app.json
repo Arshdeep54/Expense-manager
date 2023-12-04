@@ -1,15 +1,15 @@
 {
   "expo": {
     "name": "expenses-app",
-    "slug": "expenses-app",
+    "slug": "budgetbuddy",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/splashh.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashh.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#748CAB"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,12 +19,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/splashh.png",
+        "backgroundColor": "#748CAB"
+      },
+      "package": "com.arshdeep54.budgetbuddy"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a96e7f3c-1909-4b24-ace3-512ed511d5fb"
+      }
+    },
+    "owner": "arshdeep54"
   }
 }

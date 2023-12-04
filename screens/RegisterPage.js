@@ -95,12 +95,14 @@ export default function RegisterPage({ navigation }) {
         }}
       >
         <TextInput
+          underlineColorAndroid="#1D2D44"
           placeholder="Name"
           value={name.toString()}
           onChangeText={(text) => setName(text)}
           style={styles.input}
         />
         <TextInput
+          underlineColorAndroid="#1D2D44"
           placeholder="Email"
           value={email.toString()}
           onChangeText={(text) => setEmail(text)}
@@ -108,6 +110,7 @@ export default function RegisterPage({ navigation }) {
         />
         <TextInput
           placeholder="Password"
+          underlineColorAndroid="#1D2D44"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
@@ -115,6 +118,7 @@ export default function RegisterPage({ navigation }) {
         />
         <TextInput
           placeholder="Enter balance"
+          underlineColorAndroid="#1D2D44"
           value={Number(balance)}
           keyboardType="numeric"
           onChangeText={(num) => {
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: "#3E5C76",
+    // backgroundColor: "#3E5C76",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,

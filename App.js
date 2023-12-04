@@ -10,9 +10,13 @@ import CreditScreen from "./screens/CreditScreen";
 import DebitScreen from "./screens/DebitScreen";
 import BalanceScreen from "./screens/BalanceScreen";
 import TransactionsScreen from "./screens/TransactionsScreen";
-
 const Stack = createNativeStackNavigator();
 export default function App() {
+  const [Splashshow, setSplashshow] = useState(true);
+  useEffect(() => {
+    setSplashshow(false);
+  }, [4000]);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -50,6 +54,7 @@ export default function App() {
           name="credit"
           component={CreditScreen}
           options={{
+            headerTitle: "Credit Money",
             headerStyle: {
               backgroundColor: "#1D2D44",
             },
@@ -63,6 +68,7 @@ export default function App() {
           name="debit"
           component={DebitScreen}
           options={{
+            headerTitle: "Debit Money",
             headerStyle: {
               backgroundColor: "#1D2D44",
             },
@@ -76,6 +82,7 @@ export default function App() {
           name="balance"
           component={BalanceScreen}
           options={{
+            headerTitle: "Your Balance",
             headerStyle: {
               backgroundColor: "#1D2D44",
             },
@@ -89,6 +96,7 @@ export default function App() {
           name="transactions"
           component={TransactionsScreen}
           options={{
+            headerTitle: "Transactions",
             headerStyle: {
               backgroundColor: "#1D2D44",
             },

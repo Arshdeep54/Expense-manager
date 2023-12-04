@@ -1,5 +1,6 @@
 import {
   KeyboardAvoidingView,
+  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -7,6 +8,8 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
+import SafeViewAndroid from "../components/SafeViewAndroid";
+
 import {
   collection,
   addDoc,
@@ -59,17 +62,40 @@ const DebitScreen = ({ navigation }) => {
     }
   };
   return (
-    <KeyboardAvoidingView>
-      <View>
+    <SafeAreaView
+      style={{
+        ...SafeViewAndroid.AndroidSafeArea,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <View
+        style={{
+          margin: "auto",
+          width: "60%",
+          height: 325,
+          backgroundColor: "#5D7798",
+          borderRadius: 7,
+          padding: 15,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
         <TextInput
           placeholder="description"
           value={desc}
+          underlineColorAndroid="#1D2D44"
           onChangeText={(text) => setDesc(text)}
           style={styles.input}
         />
 
         <TextInput
           placeholder="Enter amount"
+          underlineColorAndroid="#1D2D44"
           value={amount}
           keyboardType="numeric"
           onChangeText={(num) => {
@@ -88,7 +114,7 @@ const DebitScreen = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

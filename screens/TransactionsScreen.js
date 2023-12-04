@@ -3,8 +3,10 @@ import {
   Text,
   View,
   FlatList,
+  SafeAreaView,
   KeyboardAvoidingView,
 } from "react-native";
+import SafeViewAndroid from "../components/SafeViewAndroid";
 import React, { useEffect, useState } from "react";
 import { collection, getFirestore, getDocs, query } from "firebase/firestore";
 import { app, auth } from "../FireBase";
@@ -21,7 +23,7 @@ const TransactionsScreen = ({ navigation }) => {
     // console.log(querySnapshot);
     querySnapshot.forEach((doc) => {
       if (doc.data().userId == auth.currentUser.uid) {
-       Transactions.push(doc.data());
+        Transactions.push(doc.data());
       }
     });
     setTransactions(Transactions);
@@ -51,45 +53,62 @@ const TransactionsScreen = ({ navigation }) => {
       />
     );
   };
- if(Transactions){
-
- 
-  return (
-    <View>
-      <Text
+  if (Transactions) {
+    return (
+      <SafeAreaView
         style={{
-          alignSelf: "center",
-          fontSize: 18,
-          margin: 3,
-          fontWeight: 500,
+          ...SafeViewAndroid.AndroidSafeArea,
+          display: "flex",
+          flexDirection: "column",
+          paddingTop: 2,
         }}
       >
-        Transaction History
-      </Text>
-      <FlatList
-        data={Transactions}
-        extraData={Transactions}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.date}
-      />
-    </View>
-  );}else{
+        <View style={{ width: "100%" }}>
+          <Text
+            style={{
+              alignSelf: "center",
+              marginTop: 7,
+              fontSize: 20,
+              fontWeight: 600,
+              color: "#F0EBD8",
+            }}
+          >
+            Transaction History
+          </Text>
+          <FlatList
+            data={Transactions}
+            extraData={Transactions}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.date}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  } else {
     return (
-      <View>
-        <Text
-          style={{
-            fontSize: 18,
-            alignSelf: "center",
-            margin: 3,
-            fontWeight: 500,
-          }}
-        >
-          Transaction History 
-
-        </Text>
-        <Text>No Transactions found</Text>
-        
-      </View>
+      <SafeAreaView
+        style={{
+          ...SafeViewAndroid.AndroidSafeArea,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              fontSize: 18,
+              alignSelf: "center",
+              margin: 3,
+              fontWeight: 500,
+            }}
+          >
+            Transaction History
+          </Text>
+          <Text>No Transactions found</Text>
+        </View>
+      </SafeAreaView>
     );
   }
 };

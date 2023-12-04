@@ -75,12 +75,14 @@ const LoginPage = ({ navigation }) => {
       >
         <TextInput
           placeholder="Enter Email"
+          underlineColorAndroid="#1D2D44"
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
         <TextInput
           placeholder="Password"
+          underlineColorAndroid="#1D2D44"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: "#3E5C76",
+    // backgroundColor: "#3E5C76",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
